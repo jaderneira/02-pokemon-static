@@ -1,8 +1,5 @@
 
-const toggleFavorite = (id: number) => {
-
-  console.log('toggleFavorite called');
-  
+const toggleFavorite = (id: number) => {  
   let favorites: number[] = JSON.parse( localStorage.getItem('favorites') || '[]' );
 
   if( favorites.includes(id)){
@@ -12,9 +9,15 @@ const toggleFavorite = (id: number) => {
   }
 
   localStorage.setItem('favorites', JSON.stringify(favorites));
+}
 
+const existInFavorites = (id: number):boolean => {
+  const favorites: number[] = JSON.parse( localStorage.getItem('favorites') || '[]' );
+
+  return favorites.includes(id);
 }
 
 export default {
-  toggleFavorite
+  toggleFavorite,
+  existInFavorites
 }
