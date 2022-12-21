@@ -1,9 +1,11 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
+import { Button, Card, Container, Grid, Image, Text } from '@nextui-org/react';
+
 import { pokeApi } from '../../api';
 import { Layout } from '../../components/layouts';
 import { Pokemon } from '../../interfaces';
-import { Button, Card, Container, Grid, Image, Text } from '@nextui-org/react';
+import { localFavorites } from '../../utils';
  
 interface Props {
   pokemon: Pokemon;
@@ -14,9 +16,13 @@ interface Params extends ParsedUrlQuery {
 }
  
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
-  console.log(pokemon);
+
+  const onToggleFavorite = () => {
+    localFavorites.toggleFavorite(pokemon.id)
+  }
+  
   return (
-    <Layout title="Algun Pokemon">
+    <Layout title={ pokemon.name }>
       <Grid.Container css={{ marginTop: '5px'}} gap={ 2 }>
         <Grid xs={12} sm={4} > 
           <Card isHoverable css={{ padding: '30px' }}>
@@ -39,6 +45,7 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
               <Button
                 color="gradient"
                 ghost
+                onPress={ onToggleFavorite }
               >
                 Save to favorites
               </Button>
