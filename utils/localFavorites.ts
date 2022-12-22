@@ -12,6 +12,9 @@ const toggleFavorite = (id: number) => {
 }
 
 const existInFavorites = (id: number):boolean => {
+  // checks if the func is called on server side
+  if(typeof window === 'undefined') return false;
+
   const favorites: number[] = JSON.parse( localStorage.getItem('favorites') || '[]' );
 
   return favorites.includes(id);
