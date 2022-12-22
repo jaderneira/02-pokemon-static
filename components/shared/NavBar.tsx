@@ -36,7 +36,7 @@ export const NavBar = () => {
 
       <NextLink href="/favorites" passHref legacyBehavior>
         <Link>
-        <Text color="white">Favorites</Text>
+          <Text color="white">Favorites</Text>
         </Link>
       </NextLink>      
       
