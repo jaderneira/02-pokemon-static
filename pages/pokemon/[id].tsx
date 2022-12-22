@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { Button, Card, Container, Grid, Image, Text } from '@nextui-org/react';
@@ -17,8 +18,16 @@ interface Params extends ParsedUrlQuery {
  
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
+  const [isInFavorites, setIsInFavorites] = useState(false);
+
+  useEffect(() => {
+    setIsInFavorites(localFavorites.existInFavorites(pokemon.id));   
+  }, [pokemon.id])
+  
+
   const onToggleFavorite = () => {
-    localFavorites.toggleFavorite(pokemon.id)
+    localFavorites.toggleFavorite(pokemon.id);
+    setIsInFavorites(!isInFavorites);
   }
   
   return (
@@ -44,10 +53,10 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 
               <Button
                 color="gradient"
-                ghost
+                ghost={ !isInFavorites }
                 onPress={ onToggleFavorite }
               >
-                Save to favorites
+                { isInFavorites ? 'In favorites' : 'Add to favorites'}
               </Button>
             </Card.Header>
             <Card.Body>
